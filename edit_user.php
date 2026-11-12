@@ -1,26 +1,17 @@
 <?php
-/**
- * edit_user.php — Edición de un usuario activo (solo admin)
- *
- * Recibe el ID por la URL (?id=3), lo valida como entero y carga el registro.
- * Tiene dos formularios independientes:
- *   - accion=datos     → nombre, apellido, DNI y correo
- *   - accion=password  → cambio de contraseña (operación separada)
- * El rol NO se puede modificar desde acá, así nadie escala privilegios
- * manipulando los campos del formulario.
- */
+
 require_once __DIR__ . '/helpers.php';
 
 $usuario_actual = exigir_admin($conexion);
 
-// 1 — Validar el identificador
+
 $id = leer_id(INPUT_GET, 'id');
 if ($id === null) {
     http_response_code(400);
     exit('Identificador inválido.');
 }
 
-// 2 — Cargar únicamente usuarios activos
+
 try {
     $stmt = $conexion->prepare(
         'SELECT id, nombre, apellido, dni, email
@@ -55,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erroresDatos[] = 'El formulario expiró. Recargá la página e intentá de nuevo.';
 
     } elseif ($accion === 'datos') {
-        // ---------- Actualizar datos personales ----------
+      
         $nombre   = leer_post('nombre');
         $apellido = leer_post('apellido');
         $dni      = leer_post('dni');
@@ -65,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             if (empty($erroresDatos)) {
-                // Duplicados contra OTROS usuarios (se excluye el propio id)
+                
                 $erroresDatos = buscar_duplicados($conexion, $dni, $email, $id);
             }
             if (empty($erroresDatos)) {
-                // WHERE estricto: solo este usuario, y solo si sigue activo
+               
                 $sql = 'UPDATE usuarios
                         SET nombre = :nombre,
                             apellido = :apellido,
@@ -99,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     } elseif ($accion === 'password') {
-        // ---------- Cambiar contraseña ----------
+        
         $password     = leer_post('password', false);
         $confirmacion = leer_post('password2', false);
 
@@ -186,4 +177,4 @@ require __DIR__ . '/header.php';
                 <button type="submit" class="btn btn-secundario">Cambiar contraseña</button>
             </form>
         </section>
-<?php require __DIR__ . '/footer.php'; ?>
+

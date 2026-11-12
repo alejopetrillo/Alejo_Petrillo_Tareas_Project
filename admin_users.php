@@ -4,7 +4,7 @@ require_once __DIR__ . '/helpers.php';
 
 $usuario_actual = exigir_admin($conexion);
 
-// Criterio de búsqueda: se limpia y se limita a 100 caracteres.
+
 $buscar = mb_substr(leer_get('buscar'), 0, 100);
 
 $usuarios = [];
@@ -19,7 +19,7 @@ try {
     if ($buscar !== '') {
         $sql .= ' AND (nombre LIKE :nombre OR apellido LIKE :apellido
                   OR dni LIKE :dni OR email LIKE :email)';
-        // addcslashes: los % y _ que escriba el usuario se toman como texto literal.
+        
         $termino = '%' . addcslashes($buscar, '%_\\') . '%';
         $parametros = [
             'nombre'   => $termino,

@@ -1,11 +1,5 @@
 <?php
-/**
- * archive_user.php — Archivado lógico de un usuario (solo admin)
- *
- * No borra la fila: marca la fecha en archivado_en y se conserva el historial.
- * Condiciones: método POST, token CSRF válido, rol admin e ID entero válido.
- * Este archivo no muestra nada: procesa y redirige al listado.
- */
+
 require_once __DIR__ . '/helpers.php';
 
 $usuario_actual = exigir_admin($conexion);
@@ -22,7 +16,7 @@ if ($id === null) {
     exit('Identificador inválido.');
 }
 
-// Un administrador no puede archivar su propia cuenta (evita quedarse sin acceso).
+
 if ($id === (int) $usuario_actual['id']) {
     poner_flash('error', 'No podés archivar tu propia cuenta.');
     redirigir('admin_users.php');

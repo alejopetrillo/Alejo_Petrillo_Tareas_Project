@@ -1,14 +1,8 @@
 <?php
-/**
- * register.php — Registro de nuevos usuarios
- *
- * Validación en el servidor → control de duplicados (DNI y correo) →
- * password_hash() → INSERT con consulta preparada.
- * El rol siempre es 'usuario': nadie puede registrarse como admin.
- */
+
 require_once __DIR__ . '/helpers.php';
 
-// Quien ya inició sesión no necesita registrarse.
+
 if (obtener_usuario_actual($conexion) !== null) {
     redirigir('dashboard.php');
 }
@@ -36,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         try {
-            // Solo se consulta a la base si los datos tienen formato válido.
+       
             if (empty($errores)) {
                 $errores = buscar_duplicados($conexion, $dni, $email);
             }
@@ -58,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 redirigir('index.php');
             }
         } catch (PDOException $e) {
-            // 23000 = violación de UNIQUE (por si dos registros llegan a la vez)
+           
             if ($e->getCode() === '23000') {
                 $errores[] = 'El DNI o el correo ya están registrados.';
             } else {

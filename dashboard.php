@@ -53,7 +53,7 @@ require __DIR__ . '/header.php';
 
     </section>
 
-    <!-- DATOS PERSONALES -->
+  
     <section class="tarjeta">
 
         <h2>Mis datos</h2>

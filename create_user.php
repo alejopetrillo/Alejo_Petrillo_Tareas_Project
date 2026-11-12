@@ -1,11 +1,5 @@
 <?php
-/**
- * create_user.php — Alta de usuarios desde el panel administrativo (solo admin)
- *
- * A diferencia de register.php, acá el administrador puede elegir el rol.
- * El valor del rol se compara contra una lista blanca: lo que llegue
- * por POST nunca se confía tal cual.
- */
+
 require_once __DIR__ . '/helpers.php';
 
 $usuario_actual = exigir_admin($conexion);
@@ -123,4 +117,4 @@ require __DIR__ . '/header.php';
                 <button type="submit" class="btn">Registrar usuario</button>
             </form>
         </section>
-<?php require __DIR__ . '/footer.php'; ?>
+

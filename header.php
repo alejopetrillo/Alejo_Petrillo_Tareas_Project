@@ -1,12 +1,5 @@
 <?php
-/**
- * header.php — Cabecera común (apertura del HTML y barra de navegación)
- *
- * Variables que define cada página antes de incluirlo:
- *   $titulo_pagina  (string)  título de la pestaña
- *   $clase_body     (string)  'auth' para login/registro (tarjeta centrada)
- *   $usuario_actual (array)   usuario logueado; si no existe, no se muestra la barra
- */
+
 $clase_body     = $clase_body ?? '';
 $usuario_actual = $usuario_actual ?? null;
 ?>
@@ -28,7 +21,7 @@ $usuario_actual = $usuario_actual ?? null;
                 <a href="admin_users.php">Usuarios</a>
                 <a href="archived_users.php">Archivados</a>
             <?php endif; ?>
-            <!-- El cierre de sesión es POST + CSRF para que no se pueda forzar con un enlace -->
+            
             <form action="logout.php" method="POST" class="inline">
                 <?= campo_csrf() ?>
                 <button type="submit" class="btn btn-secundario btn-chico">Cerrar sesión</button>
